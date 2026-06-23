@@ -107,6 +107,80 @@ o mediante la ruta:
 
 ## Respaldo PostgreSQL
 
+## Procedimiento de Migración de MySQL a PostgreSQL
+
+### Origen de los datos
+
+Se proporcionó un archivo de respaldo denominado:
+
+```text
+respaldo_origen.sql
+```
+
+El archivo contenía la definición de una base de datos MySQL denominada `tienda_origen`, una tabla llamada `productos` y 15 registros de información.
+
+### Análisis de la estructura
+
+Se realizó la revisión de la estructura original identificando los siguientes campos:
+
+| Campo          | Tipo MySQL         |
+| -------------- | ------------------ |
+| id             | INT AUTO_INCREMENT |
+| nombre         | VARCHAR(150)       |
+| sku            | VARCHAR(50)        |
+| categoria      | VARCHAR(100)       |
+| precio         | DECIMAL(10,2)      |
+| stock          | INT                |
+| activo         | TINYINT(1)         |
+| fecha_registro | DATETIME           |
+
+### Conversión de tipos hacia PostgreSQL
+
+La estructura fue adaptada a PostgreSQL utilizando una migración Laravel.
+
+| MySQL              | PostgreSQL    |
+| ------------------ | ------------- |
+| INT AUTO_INCREMENT | BIGSERIAL     |
+| VARCHAR            | VARCHAR       |
+| DECIMAL(10,2)      | NUMERIC(10,2) |
+| TINYINT(1)         | BOOLEAN       |
+| DATETIME           | TIMESTAMP     |
+
+### Creación de la estructura
+
+Se generó una migración Laravel para crear la tabla `productos` dentro de PostgreSQL.
+
+Posteriormente se ejecutó:
+
+```bash
+php artisan migrate
+```
+
+### Migración de los datos
+
+Los registros contenidos en el archivo SQL original fueron trasladados mediante un Seeder Laravel denominado:
+
+```text
+ProductoSeeder
+```
+
+La carga fue ejecutada mediante:
+
+```bash
+php artisan db:seed --class=ProductoSeeder
+```
+
+### Validación de integridad
+
+Después de la migración se verificó:
+
+* Existencia de los 15 registros originales.
+* Integridad de claves primarias.
+* Restricción única sobre el campo SKU.
+* Correcto funcionamiento de operaciones CRUD.
+* Correcto funcionamiento de búsquedas y exportación Excel.
+* Correcta sincronización de la secuencia PostgreSQL utilizada para la generación de identificadores.
+
 Generar respaldo:
 
 ```bash
