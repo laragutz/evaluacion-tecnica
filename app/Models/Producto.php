@@ -21,6 +21,6 @@ class Producto extends Model
     protected $casts = [
         'activo' => 'boolean',
         'fecha_registro' => 'datetime',
-        'precio' => 'decimal:2',
+        'precio' => 'float',
     ];
 }

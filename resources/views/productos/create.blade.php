@@ -29,9 +29,16 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Precio</label>
-            <input type="number" step="0.01" name="precio" class="form-control" value="{{ old('precio') }}" required>
-        </div>
+    <label class="form-label">Precio</label>
+    <input
+        type="text"
+        name="precio"
+        class="form-control"
+        value="{{ old('precio') }}"
+        pattern="^\d+(\.\d{1,2})?$"
+        required>
+    <small class="text-muted">Usar punto decimal. Ejemplo: 89.99</small>
+</div>
 
         <div class="mb-3">
             <label class="form-label">Stock</label>

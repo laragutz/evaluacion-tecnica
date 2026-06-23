@@ -32,12 +32,13 @@
         <div class="mb-3">
     <label class="form-label">Precio</label>
     <input
-        type="number"
-        step="0.01"
+        type="text"
         name="precio"
         class="form-control"
-        value="{{ old('precio', number_format((float)$producto->precio, 2, '.', '')) }}"
+        value="{{ old('precio', number_format((float) $producto->precio, 2, '.', '')) }}"
+        pattern="^\d+(\.\d{1,2})?$"
         required>
+    <small class="text-muted">Usar punto decimal. Ejemplo: 89.99</small>
 </div>
 
         <div class="mb-3">
